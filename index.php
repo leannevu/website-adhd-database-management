@@ -70,8 +70,7 @@
       </div>
       <div class="viewStudentsContainer" style="display: none;">
          <div id="assignmentsTab" class="tab-content">
-            <h2>Tab 1 Content</h2>
-            <p>This is content for Tab 1.</p>
+            <h2>Hm</h2>
             <div id="assignmentsTabContainer">
                <div id="scroll-list-assignments">
                   <ul>
@@ -91,8 +90,7 @@
                          dataType: 'json',  // Ensure this is set if you expect JSON
                          success: function(response) {
                              // Parse the JSON response
-                             console.log('Server response:', response);
-                             console.log(selectedItemText);
+                             //console.log('Server response:', response);
                              var htmlContent = '';
                      
                              // Loop through each student and create HTML content
@@ -135,17 +133,66 @@
                   <input type="text" id="teacherText" value="Teacher Name" readonly>
                   <label for="due">Due</label>
                   <input type="text" id="due" value="Due" readonly>
+                  <label for="status">Status</label>
+                  <input type="text" id="status" value="Status" readonly>
                </div>
             </div>
          </div>
       </div>
       <div id="addAssignmentsTab" class="tab-content">
-         <h2>Tab 2 Content</h2>
-         <p>This is content for Tab 2.</p>
+                  <label for="assignmentNameInput">Assignment Name</label>
+                  <input type="text" id="assignmentNameInput">
+                  <label for="classNameInput">Class Name</label>
+                  <select id="classNameInput"></select>
+                  <script>
+                     // jQuery to fetch and display data
+                     function fetchClasses() {
+                     $.ajax({
+                         url: 'database.php',
+                         type: 'POST',
+                         data: {      
+                             studentId: currentStudentId,
+                             action: 'fetchStudentClasses'
+                         },
+                         dataType: 'json',  // Ensure this is set if you expect JSON
+                         success: function(response) {
+                             // Parse the JSON response
+                             //console.log('Server response:', response);
+                             var htmlContent = '';
+                     
+                             // Loop through each student and create HTML content
+                             for (var i = 0; i < response.length; i++) {
+                                 htmlContent += '<option>' + response[i].className +
+                                                '</option>';
+                             }
+                     
+                             // Append the HTML content to the table body
+                             $('#classNameInput').html(htmlContent);
+                     
+                         },
+                         error: function(xhr) {
+                             console.log("An error occurred: " + xhr.status + " " + xhr.statusText);
+                         }
+                     
+                     });
+                     }
+                     // Call fetchData on page load
+                     $(document).ready(function() {
+                     });
+                  </script>
+                  <label for="statusInput">Status</label>
+                  <select id="statusInput">
+                     <option>Complete</option>
+                     <option>Incomplete</option>
+                  </select>
+                  <label for="dueInput">Status</label>
+                  <input type="date" id="dueInput">
+                  <button id="addAssignmentButton">Submit</button>
       </div>
       <div id="aboutTab" class="tab-content">
-         <h2>Tab 3 Content</h2>
-         <p>This is content for Tab 3.</p>
+         <h3 id="guardianNameText">Guardian Name(s):</h3>
+         <h3 id="guardianNumberText">Guardian Number(s):</h3>
+         <h3 id="schoolNameText">School Name(s):</h3>
       </div>
       </div>
    </body>
